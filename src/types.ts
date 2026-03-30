@@ -11,6 +11,7 @@ export interface Project {
 }
 
 export interface SiteData {
+  landingYoutubeId: string;
   reelTitle: string;
   reelYoutubeId: string;
   aboutText: string;

@@ -71,7 +71,7 @@ export default function App() {
             {/* Landing Video Background (Showreel highlight) */}
             <div className="absolute inset-0 z-0 opacity-40 grayscale blur-sm">
               <iframe
-                src={`https://www.youtube.com/embed/${siteData.reelYoutubeId}?autoplay=1&mute=1&loop=1&playlist=${siteData.reelYoutubeId}&controls=0&showinfo=0&autohide=1`}
+                src={`https://www.youtube.com/embed/${siteData.landingYoutubeId}?autoplay=1&mute=1&loop=1&playlist=${siteData.landingYoutubeId}&controls=0&showinfo=0&autohide=1`}
                 className="w-[300%] h-[300%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
                 allow="autoplay; encrypted-media"
               />
@@ -104,17 +104,6 @@ export default function App() {
                 <div className="absolute inset-0 bg-white rounded-full blur-xl opacity-0 group-hover:opacity-30 transition-opacity" />
               </motion.button>
             </div>
-
-            {/* Scroll Indicator */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.5 }}
-              className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
-            >
-              <div className="w-px h-24 bg-gradient-to-b from-white/0 via-white/50 to-white/0" />
-              <span className="text-[10px] uppercase tracking-widest text-white/40">Scroll</span>
-            </motion.div>
           </motion.div>
         );
     }

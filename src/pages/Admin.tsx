@@ -269,6 +269,15 @@ export default function Admin({ siteData: initialSiteData, onUpdate }: AdminProp
             </div>
             <div className="space-y-6 bg-white/5 p-8 rounded-3xl border border-white/10">
               <div className="space-y-2">
+                <label className="text-[10px] uppercase tracking-widest text-white/40 ml-2">Landing Page YouTube ID</label>
+                <input
+                  type="text"
+                  value={siteData.landingYoutubeId || ""}
+                  onChange={(e) => setSiteData({ ...siteData, landingYoutubeId: e.target.value })}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl py-4 px-6 focus:outline-none focus:border-white/30 transition-colors"
+                />
+              </div>
+              <div className="space-y-2">
                 <label className="text-[10px] uppercase tracking-widest text-white/40 ml-2">Reel Title</label>
                 <input
                   type="text"
@@ -278,7 +287,7 @@ export default function Admin({ siteData: initialSiteData, onUpdate }: AdminProp
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] uppercase tracking-widest text-white/40 ml-2">YouTube ID</label>
+                <label className="text-[10px] uppercase tracking-widest text-white/40 ml-2">Reel YouTube ID</label>
                 <input
                   type="text"
                   value={siteData.reelYoutubeId}
