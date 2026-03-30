@@ -29,53 +29,25 @@ export default function App() {
   const fetchProjects = async () => {
     try {
       const res = await fetch("/api/projects");
-      if (!res.ok) throw new Error("Failed to fetch");
       const data = await res.json();
       setProjects(data);
     } catch (error) {
       console.error("Failed to fetch projects", error);
-      // Fallback to empty array if fetch fails
-      setProjects([]);
     }
   };
 
   const fetchSiteData = async () => {
     try {
       const res = await fetch("/api/site-data");
-      if (!res.ok) throw new Error("Failed to fetch");
       const data = await res.json();
       setSiteData(data);
     } catch (error) {
       console.error("Failed to fetch site data", error);
-      // Fallback to basic data if fetch fails to prevent blank screen
-      setSiteData({
-        reelYoutubeId: "dQw4w9WgXcQ", // Fallback video
-        reelTitle: "Portfolio Showreel",
-        aboutText: "Visual Designer based in 2026.",
-        aboutPhoto: "https://picsum.photos/seed/about/800/1000",
-        contactText: "Let's Work Together",
-        contact: {
-          email: "hello@example.com",
-          kakaoLink: "#"
-        }
-      });
     }
   };
 
   const renderContent = () => {
-    if (!siteData) {
-      return (
-        <div className="h-screen w-full flex items-center justify-center bg-black">
-          <motion.div
-            animate={{ opacity: [0.4, 1, 0.4] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="text-white/20 uppercase tracking-[1em] text-sm"
-          >
-            Loading Experience
-          </motion.div>
-        </div>
-      );
-    }
+    if (!siteData) return null;
 
     switch (activeTab) {
       case "Reel":

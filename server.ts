@@ -34,59 +34,59 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-const app = express();
-const PORT = 3000;
+async function startServer() {
+  const app = express();
+  const PORT = 3000;
 
-app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
+  app.use(express.json());
+  app.use(express.static(path.join(__dirname, "public")));
 
-// API Routes
-app.get("/api/projects", async (req, res) => {
-  try {
-    const data = await fs.readFile(PROJECTS_FILE, "utf-8");
-    res.json(JSON.parse(data));
-  } catch (error) {
-    res.json([]);
-  }
-});
+  // API Routes
+  app.get("/api/projects", async (req, res) => {
+    try {
+      const data = await fs.readFile(PROJECTS_FILE, "utf-8");
+      res.json(JSON.parse(data));
+    } catch (error) {
+      res.json([]);
+    }
+  });
 
-app.post("/api/projects", async (req, res) => {
-  try {
-    const projects = req.body;
-    await fs.writeFile(PROJECTS_FILE, JSON.stringify(projects, null, 2));
-    res.json({ success: true });
-  } catch (error) {
-    res.status(500).json({ error: "Failed to save projects" });
-  }
-});
+  app.post("/api/projects", async (req, res) => {
+    try {
+      const projects = req.body;
+      await fs.writeFile(PROJECTS_FILE, JSON.stringify(projects, null, 2));
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to save projects" });
+    }
+  });
 
-app.get("/api/site-data", async (req, res) => {
-  try {
-    const data = await fs.readFile(SITE_DATA_FILE, "utf-8");
-    res.json(JSON.parse(data));
-  } catch (error) {
-    res.status(500).json({ error: "Failed to read site data" });
-  }
-});
+  app.get("/api/site-data", async (req, res) => {
+    try {
+      const data = await fs.readFile(SITE_DATA_FILE, "utf-8");
+      res.json(JSON.parse(data));
+    } catch (error) {
+      res.status(500).json({ error: "Failed to read site data" });
+    }
+  });
 
-app.post("/api/site-data", async (req, res) => {
-  try {
-    const siteData = req.body;
-    await fs.writeFile(SITE_DATA_FILE, JSON.stringify(siteData, null, 2));
-    res.json({ success: true });
-  } catch (error) {
-    res.status(500).json({ error: "Failed to save site data" });
-  }
-});
+  app.post("/api/site-data", async (req, res) => {
+    try {
+      const siteData = req.body;
+      await fs.writeFile(SITE_DATA_FILE, JSON.stringify(siteData, null, 2));
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to save site data" });
+    }
+  });
 
-app.post("/api/upload", upload.array("files"), (req, res) => {
-  const files = req.files as Express.Multer.File[];
-  const urls = files.map((file) => `/uploads/${file.filename}`);
-  res.json({ urls });
-});
+  app.post("/api/upload", upload.array("files"), (req, res) => {
+    const files = req.files as Express.Multer.File[];
+    const urls = files.map((file) => `/uploads/${file.filename}`);
+    res.json({ urls });
+  });
 
-// Vite middleware for development
-async function setupVite() {
+  // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
       server: { middlewareMode: true },
@@ -100,15 +100,10 @@ async function setupVite() {
       res.sendFile(path.join(distPath, "index.html"));
     });
   }
-}
 
-// Only start the server if we're not in a serverless environment
-if (process.env.NODE_ENV !== "production" || !process.env.VERCEL) {
-  setupVite().then(() => {
-    app.listen(PORT, "0.0.0.0", () => {
-      console.log(`Server running on http://localhost:${PORT}`);
-    });
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server running on http://localhost:${PORT}`);
   });
 }
 
-export default app;
+startServer();
