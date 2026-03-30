@@ -1,0 +1,17 @@
+[
+  {
+    "id": "project-1",
+    "title": "Sample Project 1",
+    "client": "Client A",
+    "role": "Video Design / Editing",
+    "youtubeId": "dQw4w9WgXcQ",
+    "thumbnail": "https://picsum.photos/seed/thumb1/800/800",
+    "tags": ["DI", "모션그래픽"],
+    "date": "2024-01-01",
+    "stills": [
+      "https://picsum.photos/seed/still1-1/800/450",
+      "https://picsum.photos/seed/still1-2/800/450",
+      "https://picsum.photos/seed/still1-3/800/450"
+    ]
+  }
+]
