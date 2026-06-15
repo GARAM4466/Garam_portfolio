@@ -23,6 +23,15 @@ Site → small **Admin** link (navbar) → login (password `admin`) → Work/Ree
 2. **Change admin password** — currently `admin` (weak). Update Netlify env `ADMIN_PASSWORD`.
    - After changing either env var, no redeploy needed for functions to pick them up on next invocation, but a redeploy is safest.
 
+## Build / cost (important)
+- **Netlify auto-build is DISABLED** (`build_settings.stop_builds: true`, set 2026-06-15). The site is git-connected, so previously every content commit (image upload / project save via the admin) triggered a CI build and was rapidly burning the free 300 build-min/month. With auto-build off, content commits cost ZERO build minutes — functions read data live from GitHub, so no rebuild is needed.
+- Deploy CODE changes with `npx netlify deploy --build --prod` (builds locally; does not consume CI build minutes). Do not re-enable auto-build unless intentionally moving to git-based CD.
+- If build minutes are ever exhausted, the live site + functions keep running; only new builds are blocked. Content reads use the function-invocation quota (125k/month) — plenty for portfolio traffic.
+
+## Later enhancements (discussed, 2026-06-15)
+- Per-project thumbnail ratio (masonry) + main-image fallback for no-YouTube projects: **DONE & deployed**.
+- Site renamed to `garam-visual.netlify.app` (was `keen-taiyaki-be6256`).
+
 ## Notes / next ideas
 - Optional enhancement discussed but not done: per-project image folders (`public/uploads/<projectId>/`). Kept flat unique-named uploads for stability (avoids rename-breakage).
 - `npm audit` shows some advisories (mostly from `netlify-cli` devDep) — non-blocking for the deployed app.

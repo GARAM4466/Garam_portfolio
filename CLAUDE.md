@@ -17,6 +17,7 @@ React 19 + Vite + Tailwind v4 + Motion SPA. **Git-as-CMS** — no database.
 
 ## Gotchas
 - **Content edits need NO redeploy** — functions read live from GitHub. Redeploy ONLY for code changes.
+- **Auto-build is OFF** (`build_settings.stop_builds: true`). The Netlify site IS git-connected, so without this every content commit (upload/save) would trigger a CI build and burn the 300 min/month free quota. Do NOT re-enable. Deploy code via `npx netlify deploy --build --prod` (builds locally — does NOT consume CI build minutes). Re-enable only if intentionally switching to git-based CD.
 - Env vars (6) live in Netlify + local `.env`: `GITHUB_TOKEN`, `GITHUB_OWNER`, `GITHUB_REPO`, `GITHUB_BRANCH`, `ADMIN_PASSWORD`, `AUTH_SECRET`.
 - Shell is zsh: glob qualifiers like `*(DN)` are evaluated before `cd`; use absolute paths or `find` for moves.
 - `포폴백업본_old/` is a local backup, gitignored — never commit it.
