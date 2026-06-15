@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { timingSafeEqual } from "node:crypto";
-import { signToken } from "./_lib/auth";
+import { signToken } from "./_lib/auth.js";
 
 function safeEqual(a: string, b: string): boolean {
   const aBuf = Buffer.from(a);

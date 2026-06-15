@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { getJson, putFile, ghConfigError } from "./_lib/github";
-import { verifyToken, getBearer } from "./_lib/auth";
+import { getJson, putFile, ghConfigError } from "./_lib/github.js";
+import { verifyToken, getBearer } from "./_lib/auth.js";
 
 const SITE_DATA_PATH = "src/data/siteData.json";
 

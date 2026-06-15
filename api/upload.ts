@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { putFile, rawUrl, ghConfigError } from "./_lib/github";
-import { verifyToken, getBearer } from "./_lib/auth";
+import { putFile, rawUrl, ghConfigError } from "./_lib/github.js";
+import { verifyToken, getBearer } from "./_lib/auth.js";
 
 const MAX_BYTES = 8 * 1024 * 1024;
 
