@@ -10,6 +10,13 @@ React 19 + Vite + Tailwind v4 + Motion SPA. **Git-as-CMS** — no database.
 - Auth: server checks `ADMIN_PASSWORD` → returns HMAC-signed token (`lib/auth.ts`). All write endpoints require `Authorization: Bearer <token>`.
 - Frontend talks to `/api/*` (mapped to functions via `netlify.toml` redirects). Token kept in `localStorage` as `admin_token`.
 
+## Frontend
+- `src/App.tsx` — tab SPA (Landing/Reel/Work/About/Contact/Admin), switched by `activeTab` state; fetches `/api/projects` + `/api/site-data` on load.
+- `src/components/WorkGrid.tsx` — Pinterest-style **masonry** (CSS `columns`); each card uses `project.thumbnailRatio` (default 16:9) so wide images aren't cropped.
+- `src/components/ProjectModal.tsx` — hero shows the YouTube embed if `project.youtubeId` is set, else `project.mainImage` (fallback to thumbnail).
+- `src/pages/Admin.tsx` — content editor (login gated). `src/types.ts` — `Project`/`SiteData` shapes.
+- Project model quirks: `youtubeId` is optional; `mainImage?` is the no-video hero; `thumbnailRatio?` is `"1:1"|"4:3"|"16:9"|"21:9"|"3:4"|"9:16"`.
+
 ## Commands
 - `npm run dev` — runs `netlify dev` (functions + vite). Needs local `.env` (see `.env.example`).
 - `npm run build` — `vite build` (output `dist/`). `npm run lint` — `tsc --noEmit`.
