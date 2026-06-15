@@ -6,3 +6,7 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# local backup folder (not part of the app)
+포폴백업본_old/
+.netlify/

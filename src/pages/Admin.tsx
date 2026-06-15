@@ -8,9 +8,15 @@ type AdminTab = "Reel" | "Work" | "About" | "Contact";
 interface AdminProps {
   siteData: SiteData | null;
   onUpdate: () => void;
+  token: string | null;
+  onLogout: () => void;
 }
 
-export default function Admin({ siteData: initialSiteData, onUpdate }: AdminProps) {
+export default function Admin({ siteData: initialSiteData, onUpdate, token, onLogout }: AdminProps) {
+  const authHeaders = () => ({
+    "Content-Type": "application/json",
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  });
   const [activeTab, setActiveTab] = useState<AdminTab>("Work");
   const [projects, setProjects] = useState<Project[]>([]);
   const [siteData, setSiteData] = useState<SiteData | null>(initialSiteData);
@@ -66,9 +72,15 @@ export default function Admin({ siteData: initialSiteData, onUpdate }: AdminProp
 
       const res = await fetch("/api/projects", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: authHeaders(),
         body: JSON.stringify(updatedProjects),
       });
+
+      if (res.status === 401) {
+        alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+        onLogout();
+        return;
+      }
 
       if (res.ok) {
         setProjects(updatedProjects);
@@ -88,9 +100,14 @@ export default function Admin({ siteData: initialSiteData, onUpdate }: AdminProp
     try {
       const res = await fetch("/api/site-data", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: authHeaders(),
         body: JSON.stringify(siteData),
       });
+      if (res.status === 401) {
+        alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+        onLogout();
+        return;
+      }
       if (res.ok) {
         onUpdate();
         alert("Site data saved successfully!");
@@ -109,9 +126,14 @@ export default function Admin({ siteData: initialSiteData, onUpdate }: AdminProp
       const updatedProjects = projects.filter((p) => p.id !== id);
       const res = await fetch("/api/projects", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: authHeaders(),
         body: JSON.stringify(updatedProjects),
       });
+      if (res.status === 401) {
+        alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+        onLogout();
+        return;
+      }
       if (res.ok) {
         setProjects(updatedProjects);
       }
@@ -122,31 +144,58 @@ export default function Admin({ siteData: initialSiteData, onUpdate }: AdminProp
     }
   };
 
+  const readFileAsBase64 = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result as string;
+        const base64 = result.includes(",") ? result.split(",")[1] : result;
+        resolve(base64);
+      };
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(file);
+    });
+
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, field: "thumbnail" | "stills" | "aboutPhoto") => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
-    const formDataUpload = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      formDataUpload.append("files", files[i]);
-    }
-
     setIsLoading(true);
     try {
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: formDataUpload,
-      });
-      const data = await res.json();
+      const urls: string[] = [];
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const contentBase64 = await readFileAsBase64(file);
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
+          body: JSON.stringify({ filename: file.name, contentBase64 }),
+        });
+        if (res.status === 401) {
+          alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+          onLogout();
+          return;
+        }
+        if (!res.ok) {
+          throw new Error(`Upload failed with status ${res.status}`);
+        }
+        const data = await res.json();
+        urls.push(data.url);
+      }
+
       if (field === "thumbnail") {
-        setFormData((prev) => ({ ...prev, thumbnail: data.urls[0] }));
+        setFormData((prev) => ({ ...prev, thumbnail: urls[0] }));
       } else if (field === "aboutPhoto") {
-        setSiteData((prev) => prev ? { ...prev, aboutPhoto: data.urls[0] } : null);
+        setSiteData((prev) => prev ? { ...prev, aboutPhoto: urls[0] } : null);
       } else {
-        setFormData((prev) => ({ ...prev, stills: [...(prev.stills || []), ...data.urls] }));
+        setFormData((prev) => ({ ...prev, stills: [...(prev.stills || []), ...urls] }));
       }
     } catch (error) {
       console.error("Upload failed", error);
+      alert("업로드에 실패했습니다.");
     } finally {
       setIsLoading(false);
     }
@@ -168,7 +217,7 @@ export default function Admin({ siteData: initialSiteData, onUpdate }: AdminProp
           <div className="flex items-center gap-4">
             <h1 className="text-5xl font-black tracking-tighter uppercase">Admin Panel</h1>
             <button 
-              onClick={() => window.location.reload()} 
+              onClick={() => onLogout()}
               className="text-[10px] text-white/20 hover:text-white/50 uppercase tracking-widest border border-white/10 px-2 py-1 rounded"
             >
               Logout

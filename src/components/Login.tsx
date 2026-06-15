@@ -5,21 +5,36 @@ import { X, Lock, User } from "lucide-react";
 interface LoginProps {
   isOpen: boolean;
   onClose: () => void;
-  onLogin: (success: boolean) => void;
+  onLogin: (token: string | null) => void;
 }
 
 export default function Login({ isOpen, onClose, onLogin }: LoginProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (username === "admin" && password === "1111") {
-      onLogin(true);
-      onClose();
-    } else {
+    setError("");
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+      if (res.ok) {
+        const { token } = await res.json();
+        onLogin(token);
+        onClose();
+      } else {
+        setError("Invalid credentials");
+      }
+    } catch (err) {
       setError("Invalid credentials");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -80,9 +95,10 @@ export default function Login({ isOpen, onClose, onLogin }: LoginProps) {
               {error && <p className="text-red-500 text-xs text-center uppercase tracking-widest">{error}</p>}
               <button
                 type="submit"
-                className="w-full bg-white text-black font-bold py-4 rounded-xl hover:bg-white/90 transition-colors uppercase tracking-widest"
+                disabled={isSubmitting}
+                className="w-full bg-white text-black font-bold py-4 rounded-xl hover:bg-white/90 transition-colors uppercase tracking-widest disabled:opacity-50"
               >
-                Login
+                {isSubmitting ? "..." : "Login"}
               </button>
             </form>
           </motion.div>

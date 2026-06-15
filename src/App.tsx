@@ -16,7 +16,8 @@ import { Project, SiteData } from "./types";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("Landing");
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [token, setToken] = useState<string | null>(() => localStorage.getItem("admin_token"));
+  const isAdmin = !!token;
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
   const [siteData, setSiteData] = useState<SiteData | null>(null);
@@ -59,7 +60,17 @@ export default function App() {
       case "Contact":
         return <Contact email={siteData.contact.email} kakaoLink={siteData.contact.kakaoLink} text={siteData.contactText} />;
       case "Admin":
-        return <Admin siteData={siteData} onUpdate={fetchSiteData} />;
+        return (
+          <Admin
+            siteData={siteData}
+            onUpdate={fetchSiteData}
+            token={token}
+            onLogout={() => {
+              setToken(null);
+              localStorage.removeItem("admin_token");
+            }}
+          />
+        );
       default:
         return (
           <motion.div
@@ -135,7 +146,10 @@ export default function App() {
       <Login 
         isOpen={isLoginOpen} 
         onClose={() => setIsLoginOpen(false)} 
-        onLogin={(success) => setIsAdmin(success)}
+        onLogin={(t) => {
+          setToken(t);
+          if (t) localStorage.setItem("admin_token", t);
+        }}
       />
 
       {/* Global Cursor or Custom Elements could go here */}
