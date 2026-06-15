@@ -1,12 +1,30 @@
 [
   {
+    "title": "소녀의 기도",
+    "client": "도레미",
+    "role": "DI",
+    "youtubeId": "",
+    "thumbnail": "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1781503203592-843788875.png",
+    "stills": [
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1781503310051-609005629.png"
+    ],
+    "tags": [
+      "단편영"
+    ],
+    "date": "2026-06-15",
+    "id": "project-1781503314655"
+  },
+  {
     "id": "project-1",
     "title": "Sample Project 1",
     "client": "Client A",
     "role": "Video Design / Editing",
     "youtubeId": "dQw4w9WgXcQ",
     "thumbnail": "https://picsum.photos/seed/thumb1/800/800",
-    "tags": ["DI", "모션그래픽"],
+    "tags": [
+      "DI",
+      "모션그래픽"
+    ],
     "date": "2024-01-01",
     "stills": [
       "https://picsum.photos/seed/still1-1/800/450",
