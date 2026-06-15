@@ -3,7 +3,7 @@
 _Last updated: 2026-06-15_
 
 ## Status: ✅ LIVE & WORKING
-- **Live site:** https://keen-taiyaki-be6256.netlify.app
+- **Live site:** https://garam-visual.netlify.app
 - **Repo:** https://github.com/GARAM4466/Garam_portfolio (branch `main`)
 - End-to-end verified: read APIs, login (401 on wrong / token on correct), image upload → GitHub commit → served via raw URL, write roundtrip, auth-enforced writes. User confirmed a real image upload committed successfully.
 

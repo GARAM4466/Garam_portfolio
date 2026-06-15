@@ -13,7 +13,7 @@ React 19 + Vite + Tailwind v4 + Motion SPA. **Git-as-CMS** — no database.
 ## Commands
 - `npm run dev` — runs `netlify dev` (functions + vite). Needs local `.env` (see `.env.example`).
 - `npm run build` — `vite build` (output `dist/`). `npm run lint` — `tsc --noEmit`.
-- Deploy: `npx netlify deploy --build --prod` (site `keen-taiyaki-be6256`, already linked).
+- Deploy: `npx netlify deploy --build --prod` (site `garam-visual`, already linked).
 
 ## Gotchas
 - **Content edits need NO redeploy** — functions read live from GitHub. Redeploy ONLY for code changes.
