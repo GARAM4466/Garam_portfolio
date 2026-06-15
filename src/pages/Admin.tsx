@@ -155,7 +155,7 @@ export default function Admin({ siteData: initialSiteData, onUpdate, token, onLo
     }
   };
 
-  const readFileAsBase64 = (file: File): Promise<string> =>
+  const readFileAsBase64 = (file: Blob): Promise<string> =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => {
@@ -167,6 +167,50 @@ export default function Admin({ siteData: initialSiteData, onUpdate, token, onLo
       reader.readAsDataURL(file);
     });
 
+  // Resize + compress images in the browser before upload: keeps payloads small
+  // (well under the serverless body limit) and makes the live site load faster.
+  // Falls back to the original file if anything goes wrong or it's not an image.
+  const MAX_EDGE = 2560;
+  const JPEG_QUALITY = 0.85;
+  const optimizeImage = (file: File): Promise<{ base64: string; filename: string }> =>
+    new Promise((resolve) => {
+      const fallback = () =>
+        readFileAsBase64(file).then((base64) => resolve({ base64, filename: file.name }));
+      if (!file.type.startsWith("image/")) return fallback();
+
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        const scale = Math.min(1, MAX_EDGE / Math.max(img.width, img.height));
+        const w = Math.max(1, Math.round(img.width * scale));
+        const h = Math.max(1, Math.round(img.height * scale));
+        const canvas = document.createElement("canvas");
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return fallback();
+        ctx.drawImage(img, 0, 0, w, h);
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) return fallback();
+            readFileAsBase64(blob)
+              .then((base64) =>
+                resolve({ base64, filename: file.name.replace(/\.[^.]+$/, "") + ".jpg" })
+              )
+              .catch(fallback);
+          },
+          "image/jpeg",
+          JPEG_QUALITY
+        );
+      };
+      img.onerror = () => {
+        URL.revokeObjectURL(url);
+        fallback();
+      };
+      img.src = url;
+    });
+
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, field: "thumbnail" | "stills" | "aboutPhoto" | "mainImage") => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
@@ -176,14 +220,14 @@ export default function Admin({ siteData: initialSiteData, onUpdate, token, onLo
       const urls: string[] = [];
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        const contentBase64 = await readFileAsBase64(file);
+        const { base64: contentBase64, filename } = await optimizeImage(file);
         const res = await fetch("/api/upload", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             ...(token ? { Authorization: `Bearer ${token}` } : {}),
           },
-          body: JSON.stringify({ filename: file.name, contentBase64 }),
+          body: JSON.stringify({ filename, contentBase64 }),
         });
         if (res.status === 401) {
           alert("세션이 만료되었습니다. 다시 로그인해주세요.");

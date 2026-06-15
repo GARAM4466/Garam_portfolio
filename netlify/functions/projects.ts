@@ -20,7 +20,13 @@ export const handler: Handler = async (event) => {
       const { data } = await getJson<unknown[]>(PROJECTS_PATH);
       return {
         statusCode: 200,
-        headers: { ...JSON_HEADERS, "Cache-Control": "no-cache" },
+        headers: {
+          ...JSON_HEADERS,
+          // Browser always revalidates; Netlify's edge CDN serves a cached copy
+          // for 60s (stale up to 5m) so repeat loads skip the GitHub round-trip.
+          "Cache-Control": "public, max-age=0, must-revalidate",
+          "Netlify-CDN-Cache-Control": "public, max-age=60, stale-while-revalidate=300",
+        },
         body: JSON.stringify(data ?? []),
       };
     }

@@ -27,7 +27,11 @@ export const handler: Handler = async (event) => {
       }
       return {
         statusCode: 200,
-        headers: { ...JSON_HEADERS, "Cache-Control": "no-cache" },
+        headers: {
+          ...JSON_HEADERS,
+          "Cache-Control": "public, max-age=0, must-revalidate",
+          "Netlify-CDN-Cache-Control": "public, max-age=60, stale-while-revalidate=300",
+        },
         body: JSON.stringify(data),
       };
     }
