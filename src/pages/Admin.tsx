@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Plus, Trash2, Edit2, Save, X, Upload, Loader2, Link as LinkIcon, Mail, User, Film } from "lucide-react";
-import { Project, SiteData } from "../types";
+import { Project, SiteData, ThumbnailRatio } from "../types";
+
+const RATIO_OPTIONS: { value: ThumbnailRatio; label: string }[] = [
+  { value: "1:1", label: "1:1 정사각형" },
+  { value: "4:3", label: "4:3 가로" },
+  { value: "16:9", label: "16:9 와이드" },
+  { value: "21:9", label: "21:9 시네마" },
+  { value: "3:4", label: "3:4 세로" },
+  { value: "9:16", label: "9:16 세로 풀" },
+];
 
 type AdminTab = "Reel" | "Work" | "About" | "Contact";
 
@@ -27,7 +36,9 @@ export default function Admin({ siteData: initialSiteData, onUpdate, token, onLo
     client: "",
     role: "",
     youtubeId: "",
+    mainImage: "",
     thumbnail: "",
+    thumbnailRatio: "16:9",
     stills: [],
     tags: [],
     date: new Date().toISOString().split("T")[0],
@@ -156,7 +167,7 @@ export default function Admin({ siteData: initialSiteData, onUpdate, token, onLo
       reader.readAsDataURL(file);
     });
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, field: "thumbnail" | "stills" | "aboutPhoto") => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, field: "thumbnail" | "stills" | "aboutPhoto" | "mainImage") => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
@@ -188,6 +199,8 @@ export default function Admin({ siteData: initialSiteData, onUpdate, token, onLo
 
       if (field === "thumbnail") {
         setFormData((prev) => ({ ...prev, thumbnail: urls[0] }));
+      } else if (field === "mainImage") {
+        setFormData((prev) => ({ ...prev, mainImage: urls[0] }));
       } else if (field === "aboutPhoto") {
         setSiteData((prev) => prev ? { ...prev, aboutPhoto: urls[0] } : null);
       } else {
@@ -530,7 +543,7 @@ export default function Admin({ siteData: initialSiteData, onUpdate, token, onLo
                         </div>
                       </div>
                       <div className="space-y-2">
-                        <label className="text-[10px] uppercase tracking-widest text-white/40 ml-2">YouTube ID</label>
+                        <label className="text-[10px] uppercase tracking-widest text-white/40 ml-2">YouTube ID <span className="text-white/20 normal-case tracking-normal">(선택 — 없으면 아래 메인 이미지를 사용)</span></label>
                         <input
                           type="text"
                           value={formData.youtubeId}
@@ -538,6 +551,18 @@ export default function Admin({ siteData: initialSiteData, onUpdate, token, onLo
                           className="w-full bg-white/5 border border-white/10 rounded-xl py-4 px-6 focus:outline-none focus:border-white/30 transition-colors"
                           placeholder="e.g. dQw4w9WgXcQ"
                         />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] uppercase tracking-widest text-white/40 ml-2">Thumbnail Ratio <span className="text-white/20 normal-case tracking-normal">(그리드 카드 비율)</span></label>
+                        <select
+                          value={formData.thumbnailRatio || "16:9"}
+                          onChange={(e) => setFormData({ ...formData, thumbnailRatio: e.target.value as ThumbnailRatio })}
+                          className="w-full bg-white/5 border border-white/10 rounded-xl py-4 px-6 focus:outline-none focus:border-white/30 transition-colors appearance-none cursor-pointer"
+                        >
+                          {RATIO_OPTIONS.map((opt) => (
+                            <option key={opt.value} value={opt.value} className="bg-[#0a0a0a]">{opt.label}</option>
+                          ))}
+                        </select>
                       </div>
                       <div className="space-y-2">
                         <label className="text-[10px] uppercase tracking-widest text-white/40 ml-2">Date</label>
@@ -563,8 +588,11 @@ export default function Admin({ siteData: initialSiteData, onUpdate, token, onLo
 
                   <div className="space-y-8">
                     <div className="space-y-4">
-                      <label className="text-[10px] uppercase tracking-widest text-white/40 ml-2 block">Thumbnail</label>
-                      <div className="aspect-video relative bg-white/5 rounded-2xl border border-dashed border-white/20 flex items-center justify-center overflow-hidden group">
+                      <label className="text-[10px] uppercase tracking-widest text-white/40 ml-2 block">Thumbnail <span className="text-white/20 normal-case tracking-normal">(미리보기는 선택한 비율)</span></label>
+                      <div
+                        style={{ aspectRatio: (formData.thumbnailRatio || "16:9").replace(":", " / ") }}
+                        className="relative bg-white/5 rounded-2xl border border-dashed border-white/20 flex items-center justify-center overflow-hidden group"
+                      >
                         {formData.thumbnail ? (
                           <>
                             <img src={formData.thumbnail} className="w-full h-full object-cover" />
@@ -580,6 +608,36 @@ export default function Admin({ siteData: initialSiteData, onUpdate, token, onLo
                             <Upload className="w-8 h-8" />
                             <span className="text-[10px] uppercase tracking-widest">Upload Thumbnail</span>
                             <input type="file" className="hidden" onChange={(e) => handleFileUpload(e, "thumbnail")} accept="image/*" />
+                          </label>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <label className="text-[10px] uppercase tracking-widest text-white/40 ml-2 block">Main Image <span className="text-white/20 normal-case tracking-normal">(YouTube 없을 때 상세화면에 표시)</span></label>
+                      <div className="aspect-video relative bg-white/5 rounded-2xl border border-dashed border-white/20 flex items-center justify-center overflow-hidden group">
+                        {formData.mainImage ? (
+                          <>
+                            <img src={formData.mainImage} className="w-full h-full object-contain" />
+                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                              <label className="cursor-pointer p-4 bg-white text-black rounded-full">
+                                <Upload className="w-6 h-6" />
+                                <input type="file" className="hidden" onChange={(e) => handleFileUpload(e, "mainImage")} accept="image/*" />
+                              </label>
+                              <button
+                                type="button"
+                                onClick={() => setFormData((prev) => ({ ...prev, mainImage: "" }))}
+                                className="p-4 bg-red-500 text-white rounded-full"
+                              >
+                                <X className="w-6 h-6" />
+                              </button>
+                            </div>
+                          </>
+                        ) : (
+                          <label className="cursor-pointer flex flex-col items-center gap-2 text-white/20 hover:text-white/40 transition-colors">
+                            <Upload className="w-8 h-8" />
+                            <span className="text-[10px] uppercase tracking-widest">Upload Main Image</span>
+                            <input type="file" className="hidden" onChange={(e) => handleFileUpload(e, "mainImage")} accept="image/*" />
                           </label>
                         )}
                       </div>

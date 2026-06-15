@@ -85,16 +85,27 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         </button>
 
         <div className="p-8 md:p-12 space-y-12">
-          {/* YouTube Embed */}
-          <div className="aspect-video w-full bg-black rounded-xl overflow-hidden shadow-2xl">
-            <iframe
-              src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1`}
-              title={project.title}
-              className="w-full h-full border-0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
+          {/* Hero: YouTube embed if a video is linked, otherwise the main image */}
+          {project.youtubeId ? (
+            <div className="aspect-video w-full bg-black rounded-xl overflow-hidden shadow-2xl">
+              <iframe
+                src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1`}
+                title={project.title}
+                className="w-full h-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          ) : (project.mainImage || project.thumbnail) ? (
+            <div className="w-full bg-black rounded-xl overflow-hidden shadow-2xl flex items-center justify-center">
+              <img
+                src={project.mainImage || project.thumbnail}
+                alt={project.title}
+                className="w-full max-h-[75vh] object-contain"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+          ) : null}
 
           {/* Project Info */}
           <div className="grid md:grid-cols-3 gap-12">

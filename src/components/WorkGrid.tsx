@@ -7,6 +7,9 @@ interface WorkGridProps {
   projects: Project[];
 }
 
+// "16:9" -> "16 / 9" for CSS aspect-ratio; defaults to 16:9
+const ratioToCss = (ratio?: string) => (ratio || "16:9").replace(":", " / ");
+
 export default function WorkGrid({ projects }: WorkGridProps) {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeFilter, setActiveFilter] = useState<string>("ALL");
@@ -37,21 +40,17 @@ export default function WorkGrid({ projects }: WorkGridProps) {
         ))}
       </div>
 
-      <motion.div 
-        layout
-        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
-      >
-        <AnimatePresence mode="popLayout">
-          {filteredProjects.map((project, index) => (
+      {/* Masonry layout — each card keeps its own aspect ratio (no crop / no letterbox) */}
+      <div className="columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-4">
+        {filteredProjects.map((project) => (
+          <div key={project.id} className="mb-4 break-inside-avoid">
             <motion.div
-              layout
-              key={project.id}
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.3 }}
               whileHover={{ scale: 1.02 }}
-              className="relative aspect-square bg-white/5 overflow-hidden cursor-pointer group rounded-lg shadow-xl"
+              style={{ aspectRatio: ratioToCss(project.thumbnailRatio) }}
+              className="relative w-full bg-white/5 overflow-hidden cursor-pointer group rounded-lg shadow-xl"
               onClick={() => setSelectedProject(project)}
             >
               <img
@@ -61,7 +60,7 @@ export default function WorkGrid({ projects }: WorkGridProps) {
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4">
-                <div className="flex gap-2 mb-2">
+                <div className="flex gap-2 mb-2 flex-wrap">
                   {project.tags.map(tag => (
                     <span key={tag} className="text-[8px] bg-white text-black px-1.5 py-0.5 rounded font-bold uppercase">{tag}</span>
                   ))}
@@ -70,9 +69,9 @@ export default function WorkGrid({ projects }: WorkGridProps) {
                 <p className="text-[10px] text-white/60 uppercase tracking-widest mt-1">{project.client}</p>
               </div>
             </motion.div>
-          ))}
-        </AnimatePresence>
-      </motion.div>
+          </div>
+        ))}
+      </div>
 
       <AnimatePresence>
         {selectedProject && (
