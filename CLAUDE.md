@@ -25,7 +25,7 @@ React 19 + Vite + Tailwind v4 + Motion SPA. **Git-as-CMS** — no database.
 
 ## Gotchas
 - **Content edits need NO redeploy** — functions read live from GitHub. Redeploy ONLY for code changes.
-- **Auto-deploy is OFF** via `vercel.json` (`git.deploymentEnabled.main: false`). The Vercel project is git-connected, so without this every content commit (upload/save) would trigger a deploy. Deploy code manually with `npx vercel --prod`. Do NOT remove that vercel.json setting.
+- **Git is disconnected from the Vercel project** — nothing auto-deploys; deploy ONLY with `npx vercel --prod`. (Vercel ignored `vercel.json`'s `git.deploymentEnabled` and kept auto-deploying function-less git builds that 404'd `/api/*` on the production domain, so the git integration was removed via `vercel git disconnect`.) This also means content commits (admin upload/save) never trigger a deploy.
 - **Vercel functions are ESM** — the project is `"type": "module"`, so relative imports in `api/` MUST use explicit `.js` extensions (e.g. `from "./_lib/auth.js"`) or functions crash at runtime with `ERR_MODULE_NOT_FOUND` / `FUNCTION_INVOCATION_FAILED`.
 - Env vars (6) are set on Vercel (Production + Development) and in local `.env`: `GITHUB_TOKEN`, `GITHUB_OWNER`, `GITHUB_REPO`, `GITHUB_BRANCH`, `ADMIN_PASSWORD`, `AUTH_SECRET`. (Netlify fallback `garam-visual.netlify.app` also has them but its free deploys were exhausted.)
 - Shell is zsh: glob qualifiers like `*(DN)` are evaluated before `cd`; use absolute paths or `find` for moves.

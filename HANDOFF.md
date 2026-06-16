@@ -19,15 +19,15 @@ _Last updated: 2026-06-15_
 ## How the user manages content
 Site → small **Admin** link (navbar) → login (password `admin`) → Work/Reel/About/Contact tabs. Upload + Save auto-commits to GitHub; changes are near-instant (no redeploy).
 
-## ⚠️ Pending (security — user deferred, NOT yet done)
-1. **Rotate GitHub token** — `ghp_...` token was pasted in chat (exposed). Revoke at https://github.com/settings/tokens, create a fine-grained PAT (Garam_portfolio → Contents R/W), then update env `GITHUB_TOKEN` on **Vercel** (and Netlify if keeping it).
-2. **Change admin password** — currently `admin` (weak). Update env `ADMIN_PASSWORD` on Vercel.
-   - After changing either env var, redeploy (`npx vercel --prod`) so functions pick it up.
+## ⚠️ Pending (security)
+1. **Rotate GitHub token** — STILL PENDING. `ghp_...` token was pasted in chat (exposed). Revoke at https://github.com/settings/tokens, create a fine-grained PAT (Garam_portfolio → Contents R/W), then update env `GITHUB_TOKEN` on **Vercel** (and Netlify if keeping it), then `npx vercel --prod`.
+2. ~~Change admin password~~ — **DONE 2026-06-16**. `ADMIN_PASSWORD` changed from `admin` to a user-chosen value on Vercel (Production + Development) and redeployed. (The value lives only in Vercel env + local `.env`; not in the repo.)
 
 ## Deploy / cost (important)
 - **On Vercel now.** Deploy CODE changes with `npx vercel --prod` (run `npx tsc --noEmit` first). Project is linked (`.vercel/`).
-- **Vercel auto-deploy is OFF** via `vercel.json` (`git.deploymentEnabled.main: false`) — the project is git-connected, so otherwise every content commit (admin upload/save) would trigger a deploy. Content commits now cost zero deploys; functions read live from GitHub. Do NOT remove that setting.
-- Env vars (6) set on Vercel for Production + Development. (Preview was skipped — Vercel prompts for a branch; not needed.)
+- **Git is DISCONNECTED from the Vercel project** (2026-06-16) — Vercel was ignoring `vercel.json`'s `git.deploymentEnabled` and kept auto-deploying every push, replacing the working CLI deploy with a function-less git build (caused `/api/*` 404 on the production domain). Fixed via `vercel git disconnect`. Now NOTHING auto-deploys; only `npx vercel --prod` deploys. Do NOT reconnect git unless you re-test thoroughly. The `git` block was removed from `vercel.json` (no longer needed).
+- Env vars (6) set on Vercel for Production + Development. (Preview skipped — Vercel prompts for a branch; not needed.)
+- After changing any env var, redeploy (`npx vercel --prod`) so functions pick up the new value.
 - **Netlify is the dormant fallback.** Its free deploys are exhausted until the monthly reset (~July 1); its auto-build is also disabled (`stop_builds`). To switch back next month: `npx netlify deploy --build --prod`.
 
 ## Later enhancements (done, 2026-06-15)
