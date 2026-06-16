@@ -2,7 +2,9 @@
   {
     "title": "소녀의 기도",
     "client": "권수진",
-    "role": "DI",
+    "role": [
+      "DI"
+    ],
     "youtubeId": "",
     "thumbnail": "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1781508055940-879647527.jpg",
     "stills": [
@@ -26,7 +28,25 @@
     "date": "2026-06-15",
     "id": "project-1781503314655",
     "mainImage": "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1781508046082-526669162.png",
-    "thumbnailRatio": "21:9"
+    "thumbnailRatio": "21:9",
+    "beforeAfters": [
+      {
+        "before": "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1781597520840-829784066.jpg",
+        "after": "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1781597524571-992301788.jpg"
+      },
+      {
+        "before": "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1781597532420-471788612.jpg",
+        "after": "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1781597537529-299821143.jpg"
+      },
+      {
+        "before": "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1781597544418-485358749.jpg",
+        "after": "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1781597547222-357979109.jpg"
+      },
+      {
+        "before": "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1781597549477-24733678.jpg",
+        "after": "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1781597552871-160491044.jpg"
+      }
+    ]
   },
   {
     "id": "project-1",
