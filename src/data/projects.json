@@ -1,7 +1,7 @@
 [
   {
     "title": "소녀의 기도",
-    "client": "도레미",
+    "client": "권수진",
     "role": "DI",
     "youtubeId": "",
     "thumbnail": "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1781508055940-879647527.jpg",
@@ -25,7 +25,8 @@
     ],
     "date": "2026-06-15",
     "id": "project-1781503314655",
-    "mainImage": "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1781508046082-526669162.png"
+    "mainImage": "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1781508046082-526669162.png",
+    "thumbnailRatio": "21:9"
   },
   {
     "id": "project-1",
