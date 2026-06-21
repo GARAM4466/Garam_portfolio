@@ -1,5 +1,34 @@
 [
   {
+    "title": "틱톡 포 비즈니스 튜토리얼",
+    "client": "TikTok",
+    "role": [
+      "그래픽",
+      "DI"
+    ],
+    "youtubeId": "https://www.youtube.com/watch?v=-pmVNBvuxx8",
+    "thumbnail": "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782054637329-385587266.jpg",
+    "stills": [
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782054665595-629988620.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782054666841-695362859.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782054668163-58264627.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782054669612-629005684.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782054671118-636190778.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782054672522-652604418.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782054673969-667047105.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782054675394-290154610.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782054676643-465375494.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782054678052-697192616.jpg"
+    ],
+    "tags": [
+      "기타"
+    ],
+    "beforeAfters": [],
+    "thumbnailRatio": "9:16",
+    "date": "2026-06-21",
+    "id": "project-1782054688950"
+  },
+  {
     "title": "신비아파트 X 치킨플러스",
     "client": "CJ ENM",
     "role": [
