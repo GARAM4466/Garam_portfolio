@@ -1,5 +1,28 @@
 [
   {
+    "title": "美丽的神话 (미려적신화) - 성룡, 김희선 Cover",
+    "client": "Charming_Jo",
+    "role": [
+      "DI"
+    ],
+    "youtubeId": "https://youtu.be/ODYAN1h21j4",
+    "thumbnail": "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782052676050-868647705.jpg",
+    "stills": [
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782052681527-349303444.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782052683019-231271712.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782052684268-390918139.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782052685933-803789684.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782052687204-547475236.jpg"
+    ],
+    "tags": [
+      "뮤직비디오"
+    ],
+    "beforeAfters": [],
+    "thumbnailRatio": "16:9",
+    "date": "2019-12-06",
+    "id": "project-1782052687787"
+  },
+  {
     "title": "알티오라 브랜드 광고",
     "client": "알티오라",
     "role": [
