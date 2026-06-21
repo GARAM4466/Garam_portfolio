@@ -1,5 +1,34 @@
 [
   {
+    "title": "틱톡 포 비즈니스 서밋 2021",
+    "client": "TikTok",
+    "role": [
+      "그래픽",
+      "DI"
+    ],
+    "youtubeId": "https://www.youtube.com/watch?v=mh3Qlfvzpo0&t=370s",
+    "thumbnail": "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782055245751-165586664.jpg",
+    "stills": [
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782055250205-19212729.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782055251710-327025949.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782055253223-622035001.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782055254527-590518398.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782055256235-54084900.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782055257718-738872547.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782055259369-460313889.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782055261264-9758686.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782055263089-553324220.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782055264668-973074730.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782055266129-610728492.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782055267626-144978553.jpg"
+    ],
+    "tags": [],
+    "beforeAfters": [],
+    "thumbnailRatio": "16:9",
+    "date": "2022-01-21",
+    "id": "project-1782055302126"
+  },
+  {
     "title": "틱톡 포 비즈니스 튜토리얼",
     "client": "TikTok",
     "role": [
@@ -148,7 +177,7 @@
       "뮤직비디오"
     ],
     "beforeAfters": [],
-    "thumbnailRatio": "21:9",
+    "thumbnailRatio": "16:9",
     "date": "2019-12-06",
     "id": "project-1782052687787"
   },
