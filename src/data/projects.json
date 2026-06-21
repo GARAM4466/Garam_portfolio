@@ -1,5 +1,33 @@
 [
   {
+    "title": "레고 꿀팁 대방출 SHOW",
+    "client": " LEGO",
+    "role": [
+      "편집",
+      "그래픽",
+      "DI"
+    ],
+    "youtubeId": "https://www.youtube.com/watch?v=x2x6WhiwS-c",
+    "thumbnail": "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782053117502-620619919.jpg",
+    "stills": [
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782053261500-452855757.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782053263542-555367516.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782053265213-288393939.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782053266963-749730881.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782053269031-689929161.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782053271122-648976286.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782053272909-947233783.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782053274626-493033071.jpg"
+    ],
+    "tags": [
+      "홍보"
+    ],
+    "beforeAfters": [],
+    "thumbnailRatio": "16:9",
+    "date": "2021-11-08",
+    "id": "project-1782053294955"
+  },
+  {
     "title": "불법게임물 근절 공익광고",
     "client": "게임물관리위원회",
     "role": [
