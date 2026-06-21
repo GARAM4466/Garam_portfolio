@@ -1,5 +1,26 @@
 [
   {
+    "title": "신비아파트 X 치킨플러스",
+    "client": "CJ ENM",
+    "role": [
+      "그래픽",
+      "편집"
+    ],
+    "youtubeId": "https://www.youtube.com/watch?v=szJV3hzWELw",
+    "thumbnail": "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782053945194-282088976.jpg",
+    "stills": [
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782053949459-772867.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782053951374-840094879.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782053953425-388792241.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782053955387-734575633.jpg"
+    ],
+    "tags": [],
+    "beforeAfters": [],
+    "thumbnailRatio": "16:9",
+    "date": "2021-11-04",
+    "id": "project-1782054348220"
+  },
+  {
     "title": "신비아파트XR 공포의 엘리베이터",
     "client": "엑스오플레",
     "role": [
