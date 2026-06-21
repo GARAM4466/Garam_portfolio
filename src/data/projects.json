@@ -1,5 +1,29 @@
 [
   {
+    "title": "신비아파트XR 공포의 엘리베이터",
+    "client": "엑스오플레",
+    "role": [
+      "편집",
+      "그래픽"
+    ],
+    "youtubeId": "https://www.youtube.com/watch?v=wzwP_HU_gGE",
+    "thumbnail": "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782053815830-23500711.jpg",
+    "stills": [
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782053819221-698878506.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782053821195-256901259.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782053823065-744183815.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782053824749-567319564.jpg",
+      "https://raw.githubusercontent.com/GARAM4466/Garam_portfolio/main/public/uploads/1782053826638-56310789.jpg"
+    ],
+    "tags": [
+      "홍보"
+    ],
+    "beforeAfters": [],
+    "thumbnailRatio": "16:9",
+    "date": "2021-12-12",
+    "id": "project-1782053827357"
+  },
+  {
     "title": "레고 꿀팁 대방출 SHOW",
     "client": " LEGO",
     "role": [
